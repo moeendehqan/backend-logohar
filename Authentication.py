@@ -82,3 +82,13 @@ def admin_checkid(request):
     if adminDict == None:
         return json.dumps({'reply':False})
     return json.dumps({'reply':True})
+
+def admin_getinfouser(data):
+    try:
+        _id = ObjectId(data['id'])
+        adminDict = config.db['adminUser'].find_one({'_id':_id},{'_id':0,'name':1})
+        if adminDict == None:
+            return json.dumps({'reply':False,'msg':'کاربری یافت نشد'})
+        return json.dumps({'reply':True,'infouser':adminDict})
+    except:
+        return json.dumps({'reply':False,'msg':'کاربری یافت نشد'})
