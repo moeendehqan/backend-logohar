@@ -11,3 +11,12 @@ def findTitleTypeColor(name):
     return title
     
 
+def findTitleTypeJob(nameList):
+    titleList = []
+    for j in nameList:
+        for i in config.categoryJob:
+            if i['name'] == j:
+                titleList.append(i['title'])
+                break
+    return titleList
+    

@@ -76,12 +76,16 @@ def admin_login(request):
 
 
 def admin_checkid(request):
-    data = request.get_json()
-    _id = ObjectId(data['id'])
-    adminDict = config.db['adminUser'].find_one({'_id':_id})
-    if adminDict == None:
+    try:
+        data = request.get_json()
+        _id = ObjectId(data['id'])
+        adminDict = config.db['adminUser'].find_one({'_id':_id})
+        if adminDict == None:
+            return json.dumps({'reply':False})
+        return json.dumps({'reply':True})
+    except:
         return json.dumps({'reply':False})
-    return json.dumps({'reply':True})
+
 
 def admin_getinfouser(data):
     try:
