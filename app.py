@@ -28,6 +28,15 @@ def admin_getinfouser():
 def admin_setpallet():
     return basic.admin_setpallet(request.get_json())
 
+@app.route('/admin/getstaticspallet',methods = ['POST'])
+def admin_getstaticspallet():
+    return basic.admin_getstaticspallet(request.get_json())
+
+@app.route('/admin/getbankpallet',methods = ['POST'])
+def admin_getbankpallet():
+    return basic.admin_getbankpallet(request.get_json())
+
+
 @app.route('/public/getallcategory',methods = ['POST'])
 def public_getallcategory():
     return json.dumps({'colorType':config.categoryColor,'jobType':config.categoryJob})

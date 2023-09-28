@@ -1,6 +1,6 @@
 
 import config
-
+from persiantools.jdatetime import JalaliDate
 
 def findTitleTypeColor(name):
     title = ''
@@ -20,3 +20,7 @@ def findTitleTypeJob(nameList):
                 break
     return titleList
     
+
+def dateToJalali(date):
+    return JalaliDate.to_jalali(date)
+
