@@ -1,30 +1,33 @@
-from pymongo import MongoClient
+from mongoengine import connect
 
-client = MongoClient()
-db = client['logohar']
+class Config:
+    DEBUG = False
+    TESTING = False
+    SECRET_KEY = 'your_secret_key'
+    MONGODB_SETTINGS = {
+        'host': 'mongodb://localhost:27017/logohar',
+    }
+
+class DevelopmentConfig(Config):
+    DEBUG = True
 
 
+class ProductionConfig(Config):
+    HOST = '0.0.0.0'
+    PORT = 8080
 
-categoryColor = [{'name':'warm','title':'گرم'},{'name':'cold','title':'سرد'},{'name':'fancy','title':'فانتزی'},{'name':'pastel','title':'پاستیلی'}]
-categoryJob = [
-    {'title':'گردشگری','name':'tourism'},
-    {'title':'سرگرمی و ورزشی','name':'sports'},
-    {'title':'فرهنگی و آموزشی','name':'educational'},
-    {'title':'حیوانات خانگی و دام','name':'pet'},
-    {'title':'کشاورزی و محیط زیست','name':'agriculture'},
-    {'title':'آرایشی و بهداشتی','name':'cosmetics'},
-    {'title':'املاک','name':'estate'},
-    {'title':'وسایل نقلیه','name':'vehicles'},
-    {'title':'پزشکی و سلامت','name':'health'},
-    {'title':'تولید و صنعت','name':'industry'},
-    {'title':'خوراکی و آشامیدنی','name':'food'},
-    {'title':'فن آوری','name':'technology'},
-    {'title':'مالی و اقتصادی','name':'financial'},
-    {'title':'مذهبی','name':'religious'},
-    {'title':'لوازم خانگی','name':'appliances'},
-    {'title':'ابزار آلات','name':'tools'},
-    {'title':'حقوقی و مشاوره','name':'legal'},
-    {'title':'حمل و نقل و پست','name':'shipping'},
-    {'title':'پوشاک و مد','name':'fashion'},
-    {'title':'فنی مهندسی','name':'engineering'},
-]
+class TestingConfig(Config):
+    TESTING = True
+    MONGODB_SETTINGS = {
+        'host': 'mongodb://localhost:27017/your_test_database_name',
+    }
+
+config = {
+    'development': DevelopmentConfig,
+    'production': ProductionConfig,
+    'testing': TestingConfig,
+    'default': DevelopmentConfig
+}
+
+# اتصال به دیتابیس در هنگام اجرای برنامه
+connect(host=Config.MONGODB_SETTINGS['host'])
