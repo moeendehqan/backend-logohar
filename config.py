@@ -7,19 +7,20 @@ class Config:
     MONGODB_SETTINGS = {
         'host': 'mongodb://localhost:27017/logohar',
     }
+    HOST = '0.0.0.0'
+    PORT = 5000
 
 class DevelopmentConfig(Config):
     DEBUG = True
 
-
 class ProductionConfig(Config):
     HOST = '0.0.0.0'
-    PORT = 8080
+    PORT = 2100
 
 class TestingConfig(Config):
     TESTING = True
     MONGODB_SETTINGS = {
-        'host': 'mongodb://localhost:27017/your_test_database_name',
+        'host': 'mongodb://localhost:27017/logohar',
     }
 
 config = {
@@ -29,5 +30,4 @@ config = {
     'default': DevelopmentConfig
 }
 
-# اتصال به دیتابیس در هنگام اجرای برنامه
 connect(host=Config.MONGODB_SETTINGS['host'])
