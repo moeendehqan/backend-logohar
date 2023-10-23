@@ -21,6 +21,5 @@ class fact_class(Document):
         return result
     @classmethod
     def find_by_name(cls, name):
-        print(name)
         result =  cls.objects.get(name = name)
         return result.to_dict()

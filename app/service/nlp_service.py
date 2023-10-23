@@ -1,5 +1,7 @@
 from hazm import *
 import os
+
+
 class sent_vector:
     def __init__(self):
         self.normalizer = Normalizer()

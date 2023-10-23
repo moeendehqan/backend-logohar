@@ -41,7 +41,6 @@ class pallet_resource(Resource):
         type_color = fact_color_type.find_by_name(args['type_color'])
         jobs = [fact_jobs.find_by_name(x) for x in args['jobs']]
         logo_class = [fact_class.find_by_name(x) for x in args['logo_class']]
-        print(logo_class)
         object_sent_vector = sent_vector()
         keywords = str(args['keywords']).split('-')
         keywords = [object_sent_vector.normalize_word(x) for x in keywords]
