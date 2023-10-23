@@ -12,6 +12,8 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
+    PORT = 5000
+
 
 class ProductionConfig(Config):
     HOST = '0.0.0.0'

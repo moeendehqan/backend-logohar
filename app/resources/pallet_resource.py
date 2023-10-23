@@ -2,7 +2,7 @@ from flask_restful import Resource, reqparse
 from app.models.pallet_models import pallet
 from app.exceptions.not_found_admin import admin_validator
 from app.models.fact_color_type_models import fact_color_type
-from app.models.fact_category_models import fact_category
+from app.models.fact_jobs_models import fact_jobs
 from app.service.nlp_service import sent_vector
 import datetime
 
@@ -38,7 +38,7 @@ class pallet_resource(Resource):
         admin_validator(id=args['id']).admin_id_exists()
         object_sent_vector = sent_vector()
         type_color = fact_color_type.find_by_name(args['type_color'])
-        jobs = [fact_category.find_by_name(x) for x in args['jobs']]
+        jobs = [fact_jobs.find_by_name(x) for x in args['jobs']]
         keywords = str(args['keywords']).split('-')
         keywords = [object_sent_vector.normalize_word(x) for x in keywords]
         keywords_vectors = [object_sent_vector.word_normaloize_and_vector_list(x) for x in keywords]

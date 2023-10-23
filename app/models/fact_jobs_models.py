@@ -1,7 +1,7 @@
 from mongoengine import Document, StringField, IntField, ListField, DateTimeField, ObjectIdField
 
 
-class fact_category(Document):
+class fact_jobs(Document):
     _id = ObjectIdField()
     name = StringField()
     title = StringField()

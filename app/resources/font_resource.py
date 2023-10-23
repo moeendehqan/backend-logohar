@@ -1,9 +1,9 @@
 from flask_restful import Resource, reqparse, request
 from app.exceptions.not_found_admin import admin_validator
 from app.models.font_model import font
-from app.models.fact_category_models import fact_category
+from app.models.fact_jobs_models import fact_jobs
 import os
-
+import random
 
 admin_parser = reqparse.RequestParser()
 admin_parser.add_argument('id', type=str, help='کوکی ذخیر نشده، لطفا مجددا وارد شوید',required=True)
@@ -22,7 +22,7 @@ class font_resource(Resource):
         jobs = request.form['jobs'].split(',')
         if len(jobs) == 0:
             return {'message':'دستبندی شغلی خالی است'},403
-        jobs = [fact_category.find_by_name(x) for x in jobs]
+        jobs = [fact_jobs.find_by_name(x) for x in jobs]
         file = request.files['file']
         file_type =  file.content_type
         file_name = file.filename
@@ -35,7 +35,8 @@ class font_resource(Resource):
             return {'message': 'تکراری است'}, 409
         if not os.path.exists(font_folder):
             os.makedirs(font_folder)
-        file_path = os.path.join(font_folder, file_name)
+        file_name_system = str(random.randint(10000,99999))+'_'+file_name
+        file_path = os.path.join(font_folder, file_name_system)
         new_font = font(
             name = name,
             jobs = [x['name'] for x in jobs],
@@ -43,6 +44,7 @@ class font_resource(Resource):
             jobs_name_vector = [x['vector'] for x in jobs],
             file_type = file_type,
             file_name =file_name,
+            file_name_system = file_name_system,
             weight = weight,
             file_path = font_folder,
             creator = idd,

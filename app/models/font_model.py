@@ -11,6 +11,7 @@ class font(Document):
     jobs_name_vector = ListField(required=True)
     file_type = StringField(required=True)
     file_name = StringField(required=True)
+    file_name_system = StringField(required=True)
     weight = StringField(required=True)
     file_path = StringField(required=True)
     creator = StringField(required=True)
@@ -23,7 +24,7 @@ class font(Document):
             'jobs_name': self.jobs_name,
             'file_type': self.file_type,
             'file_name': self.file_name,
-            'file_name': self.file_name,
+            'file_name_system': self.file_name_system,
             'weight': self.weight,
             'file_path':self.file_path,
             'create_date':self.create_date,

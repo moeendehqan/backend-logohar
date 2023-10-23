@@ -5,6 +5,7 @@ from bson import ObjectId
 class vector(Document):
     _id = ObjectIdField()
     file = BinaryField(required=True)
+    file_str = StringField(required=True)
     file_name = StringField(required=True)
     file_type = StringField(required=True)
     jobs = ListField(required=True)
@@ -14,9 +15,12 @@ class vector(Document):
     keywords_vector = ListField(required=True)
     creator = StringField(required=True)
     create_date = DateTimeField(default=datetime.datetime.now())
-    aspect_ratio = FloatField(required=True)
-    width = IntField(required=True)
-    height = IntField(required=True)
+    aspect_ratio_file = FloatField(required=True)
+    width_file = FloatField(required=True)
+    height_file = FloatField(required=True)
+    aspect_ratio_content = FloatField(required=True)
+    height_content = FloatField(required=True)
+    width_content = FloatField(required=True)
     def to_dict(self):
         return {
             '_id': str(self._id),
@@ -27,9 +31,12 @@ class vector(Document):
             'jobs_name': self.jobs_name,
             'keywords': self.keywords,
             'create_date': self.create_date,
-            'aspect_ratio':self.aspect_ratio,
-            'width':self.width,
-            'height':self.height
+            'aspect_ratio_file':self.aspect_ratio_file,
+            'width_file':self.width_file,
+            'height_file':self.height_file,
+            'aspect_ratio_content':self.aspect_ratio_content,
+            'height_content':self.height_content,
+            'width_content':self.width_content
         }
     @classmethod
     def existing_file(cls, file):

@@ -1,10 +1,11 @@
 from flask_restful import Resource, reqparse, request
 from app.exceptions.not_found_admin import admin_validator
-from app.models.fact_category_models import fact_category
+from app.models.fact_jobs_models import fact_jobs
 from app.service.nlp_service import sent_vector
 from app.models.vector_model import vector
 from app.service.vector_service import vector_service
 from io import BytesIO
+from app.service.file_service import file_service
 
 vector_tank_parser = reqparse.RequestParser()
 vector_tank_parser.add_argument('id', type=str, help='کوکی ذخیر نشده، لطفا مجددا وارد شوید',required=True)
@@ -30,21 +31,30 @@ class vector_resource(Resource):
         file = request.files['file']
         file_type =  file.content_type
         file_name = file.filename
+        temp_svg_patch = file_service.save_uploaded_file(request.files['file'])
+
+        str_svg = vector_service.svg_file_to_string(temp_svg_patch)
+        binary_svg = vector_service.svg_file_to_binary(temp_svg_patch)
+
+        aspect_ratio_file = vector_service.aspect_ratio_file(temp_svg_patch)
+        width_file = int(aspect_ratio_file['width'][:-2])
+        height_file = int(aspect_ratio_file['height'][:-2])
+        aspect_ratio_file = width_file / height_file
         
-        file = BytesIO(file.read()).read()
-        aspect_ratio = vector_service.aspect_ratio(file)
-        width = int(aspect_ratio['width'][:-2])
-        height = int(aspect_ratio['height'][:-2])
-        aspect_ratio = width / height
+        aspect_ratio_content = vector_service.aspect_rate_content(temp_svg_patch)
+        width_content = aspect_ratio_content['width']
+        height_content = aspect_ratio_content['height']
+        aspect_ratio_content = float(width_content) / float(height_content)
         existing_vector = vector.existing_file(file=file)
         if existing_vector:
             return {'message': 'فایل تکراری است'}, 409
         object_sent_vector = sent_vector()
         keywords = [object_sent_vector.normalize_word(x) for x in keywords]
         keywords_vector = [object_sent_vector.word_normaloize_and_vector_list(x) for x in keywords]
-        jobs = [fact_category.find_by_name(x) for x in jobs]
+        jobs = [fact_jobs.find_by_name(x) for x in jobs]
         new_vector = vector(
-            file = file,
+            file = binary_svg,
+            file_str = str_svg,
             file_name = file_name,
             file_type = file_type,
             jobs = [x['name'] for x in jobs],
@@ -53,9 +63,12 @@ class vector_resource(Resource):
             keywords = keywords,
             keywords_vector = keywords_vector,
             creator = idd,
-            aspect_ratio = aspect_ratio,
-            width = width,
-            height = height
+            aspect_ratio_file = aspect_ratio_file,
+            width_file = width_file,
+            height_file = height_file,
+            aspect_ratio_content = aspect_ratio_content ,
+            height_content = height_content,
+            width_content = width_content,
         )
         new_vector.save()
         return True, 200

@@ -1,1 +1,3 @@
-app/service/nlp_file_models/sent2vec-naab.model.syn1neg.npy
+app/service/nlp_file_models
+__pycache__
+public/temp
