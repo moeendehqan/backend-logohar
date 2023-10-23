@@ -21,3 +21,5 @@ class admin_jobs(Resource):
         for item in all_category:
             del item['vector']
         return all_category, 200
+
+
