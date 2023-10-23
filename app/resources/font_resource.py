@@ -2,6 +2,7 @@ from flask_restful import Resource, reqparse, request
 from app.exceptions.not_found_admin import admin_validator
 from app.models.font_model import font
 from app.models.fact_jobs_models import fact_jobs
+from app.models.fact_class_models import fact_class
 import os
 import random
 
@@ -22,7 +23,11 @@ class font_resource(Resource):
         jobs = request.form['jobs'].split(',')
         if len(jobs) == 0:
             return {'message':'دستبندی شغلی خالی است'},403
+        logo_class = request.form['logo_class'].split(',')
+        if len(logo_class) == 0:
+            return {'message':'نوع لوگو خالی است'},403
         jobs = [fact_jobs.find_by_name(x) for x in jobs]
+        logo_class = [fact_class.find_by_name(x) for x in logo_class]
         file = request.files['file']
         file_type =  file.content_type
         file_name = file.filename
@@ -42,6 +47,9 @@ class font_resource(Resource):
             jobs = [x['name'] for x in jobs],
             jobs_name = [x['title'] for x in jobs],
             jobs_name_vector = [x['vector'] for x in jobs],
+            logo_class = [x['name'] for x in logo_class],
+            logo_class_name = [x['title'] for x in logo_class],
+            logo_class_name_vector = [x['vector'] for x in logo_class],
             file_type = file_type,
             file_name =file_name,
             file_name_system = file_name_system,

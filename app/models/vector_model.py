@@ -11,6 +11,9 @@ class vector(Document):
     jobs = ListField(required=True)
     jobs_name = ListField(required=True)
     jobs_name_vector = ListField(required=True)
+    logo_class = ListField(required=True)
+    logo_class_name = ListField(required=True)
+    logo_class_name_vector = ListField(required=True)
     keywords = ListField(required=True)
     keywords_vector = ListField(required=True)
     creator = StringField(required=True)
@@ -29,6 +32,8 @@ class vector(Document):
             'file_type': self.file_type,
             'jobs': self.jobs,
             'jobs_name': self.jobs_name,
+            'logo_class': self.logo_class,
+            'logo_class_name': self.logo_class_name,
             'keywords': self.keywords,
             'create_date': self.create_date,
             'aspect_ratio_file':self.aspect_ratio_file,

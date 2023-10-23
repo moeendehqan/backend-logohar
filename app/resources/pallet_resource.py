@@ -3,6 +3,7 @@ from app.models.pallet_models import pallet
 from app.exceptions.not_found_admin import admin_validator
 from app.models.fact_color_type_models import fact_color_type
 from app.models.fact_jobs_models import fact_jobs
+from app.models.fact_class_models import fact_class
 from app.service.nlp_service import sent_vector
 import datetime
 
@@ -17,6 +18,7 @@ new_pallet_parser.add_argument('third_color', type=str, required=True, help='س�
 new_pallet_parser.add_argument('type_color', type=str, required=True, help='نوع رنگ وارد نشده')
 new_pallet_parser.add_argument('jobs',action='append',  type=str, required=True, help='دسته بندی صنفی وارد نشده')
 new_pallet_parser.add_argument('keywords', type=str, required=True, help='کلیدواژه وارد نشده')
+new_pallet_parser.add_argument('logo_class',action='append',type=str, required=True, help='نوع لوگو وارد نشده')
 
 
 del_pallet_parser = reqparse.RequestParser()
@@ -36,9 +38,11 @@ class pallet_resource(Resource):
     def post(self):
         args = new_pallet_parser.parse_args()
         admin_validator(id=args['id']).admin_id_exists()
-        object_sent_vector = sent_vector()
         type_color = fact_color_type.find_by_name(args['type_color'])
         jobs = [fact_jobs.find_by_name(x) for x in args['jobs']]
+        logo_class = [fact_class.find_by_name(x) for x in args['logo_class']]
+        print(logo_class)
+        object_sent_vector = sent_vector()
         keywords = str(args['keywords']).split('-')
         keywords = [object_sent_vector.normalize_word(x) for x in keywords]
         keywords_vectors = [object_sent_vector.word_normaloize_and_vector_list(x) for x in keywords]
@@ -52,6 +56,9 @@ class pallet_resource(Resource):
             jobs = [x['name'] for x in jobs],
             jobs_name = [x['title'] for x in jobs],
             jobs_name_vector = [x['vector'] for x in jobs],
+            logo_class = [x['name'] for x in logo_class],
+            logo_class_name = [x['title'] for x in logo_class],
+            logo_class_name_vector = [x['vector'] for x in logo_class],
             keywords = keywords,
             keywords_vectors = keywords_vectors,
             creator = args['id'],

@@ -9,6 +9,9 @@ class font(Document):
     jobs = ListField(required=True)
     jobs_name = ListField(required=True)
     jobs_name_vector = ListField(required=True)
+    logo_class = ListField(required=True)
+    logo_class_name = ListField(required=True)
+    logo_class_name_vector = ListField(required=True)
     file_type = StringField(required=True)
     file_name = StringField(required=True)
     file_name_system = StringField(required=True)
@@ -22,6 +25,8 @@ class font(Document):
             'name': self.name,
             'jobs': self.jobs,
             'jobs_name': self.jobs_name,
+            'logo_class': self.logo_class,
+            'logo_class_name': self.logo_class_name,
             'file_type': self.file_type,
             'file_name': self.file_name,
             'file_name_system': self.file_name_system,
@@ -46,7 +51,6 @@ class font(Document):
     @classmethod
     def delete_font(cls, id_font):
         font_to_delete = cls.objects(_id=ObjectId(id_font)).delete()
-        print(font_to_delete)
         if font_to_delete:
             return True
         else:

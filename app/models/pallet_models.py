@@ -9,6 +9,9 @@ class pallet(Document):
     type_color = StringField(required=True)
     type_color_name = StringField(required=True)
     type_color_name_vector = ListField(required=True)
+    logo_class = ListField(required=True)
+    logo_class_name = ListField(required=True)
+    logo_class_name_vector = ListField(required=True)
     jobs = ListField(required=True)
     jobs_name = ListField(required=True)
     jobs_name_vector = ListField(required=True)
@@ -28,6 +31,8 @@ class pallet(Document):
             'jobs': self.jobs,
             'jobs_name': self.jobs_name,
             'jobs_name_vector': self.jobs_name_vector,
+            'logo_class': self.logo_class,
+            'logo_class_name': self.logo_class_name,
             'keywords': self.keywords,
             'keywords_vectors': self.keywords_vectors,
             'creator': self.creator,

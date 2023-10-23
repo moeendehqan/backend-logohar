@@ -46,6 +46,7 @@ class Vectorize:
 
 
 def init_fact_color_type():
+    print('start init collection fact_color_type')
     ob = Vectorize()
     db['fact_color_type'].drop()
     lst = [
@@ -60,9 +61,42 @@ def init_fact_color_type():
         db['fact_color_type'].insert_one({'title':norm,'vector':vctr,'name':i['name']})
 
 
+def init_fact_jobs():
+    print('start init collection fact_jobs')
+    ob = Vectorize()
+    db['fact_jobs'].drop()
+    lst = [
+        {'vector':[],'title':'گردشگری','name':'tourism'},
+        {'vector':[],'title':'سرگرمی و ورزشی','name':'sports'},
+        {'vector':[],'title':'فرهنگی و آموزشی','name':'educational'},
+        {'vector':[],'title':'حیوانات خانگی و دام','name':'pet'},
+        {'vector':[],'title':'کشاورزی و محیط زیست','name':'agriculture'},
+        {'vector':[],'title':'آرایشی و بهداشتی','name':'cosmetics'},
+        {'vector':[],'title':'املاک','name':'estate'},
+        {'vector':[],'title':'وسایل نقلیه','name':'vehicles'},
+        {'vector':[],'title':'پزشکی و سلامت','name':'health'},
+        {'vector':[],'title':'تولید و صنعت','name':'industry'},
+        {'vector':[],'title':'خوراکی و آشامیدنی','name':'food'},
+        {'vector':[],'title':'فن آوری','name':'technology'},
+        {'vector':[],'title':'مالی و اقتصادی','name':'financial'},
+        {'vector':[],'title':'مذهبی','name':'religious'},
+        {'vector':[],'title':'لوازم خانگی','name':'appliances'},
+        {'vector':[],'title':'ابزار آلات','name':'tools'},
+        {'vector':[],'title':'حقوقی و مشاوره','name':'legal'},
+        {'vector':[],'title':'حمل و نقل و پست','name':'shipping'},
+        {'vector':[],'title':'پوشاک و مد','name':'fashion'},
+        {'vector':[],'title':'فنی مهندسی','name':'engineering'},
+    ]
+    for i in lst:
+        norm = ob.normalize_word(i['title'])
+        vctr = ob.str_to_vector_list(norm)
+        db['fact_jobs'].insert_one({'title':norm,'vector':vctr,'name':i['name']})
+
+
 
 
 def init_fact_class():
+    print('start init collection fact_class')
     ob = Vectorize()
     db['fact_class'].drop()
     lst = [
@@ -78,4 +112,5 @@ def init_fact_class():
   
 
 init_fact_color_type()
+init_fact_jobs()
 init_fact_class()

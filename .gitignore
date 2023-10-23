@@ -1,3 +1,4 @@
 app/service/nlp_file_models
 __pycache__
 public/temp
+public/fonts
