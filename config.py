@@ -8,16 +8,13 @@ class Config:
         'host': 'mongodb://localhost:27017/logohar',
     }
     HOST = '0.0.0.0'
-    PORT = 5000
+    PORT = 8080
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    PORT = 5000
-
 
 class ProductionConfig(Config):
     HOST = '0.0.0.0'
-    PORT = 2100
 
 class TestingConfig(Config):
     TESTING = True

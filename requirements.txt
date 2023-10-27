@@ -1,0 +1,10 @@
+waitress
+Flask
+Flask-Cors
+mongoengine
+Flask-RESTful
+persiantools
+GuardPyCaptcha
+hazm
+svgpathtools
+pymongo
