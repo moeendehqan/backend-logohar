@@ -14,10 +14,10 @@ else:
 
 
 if __name__ == '__main__':
-    init_fact_class()
-    init_fact_jobs()
-    init_fact_color_type()
     if environment == 'production':
+        init_fact_class()
+        init_fact_jobs()
+        init_fact_color_type()
         serve(app, host=app_config.HOST, port=app_config.PORT)
     else:
         app.run(debug=True, port=app_config.PORT, host=app_config.HOST)

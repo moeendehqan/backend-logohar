@@ -35,6 +35,10 @@ class pallet_tank_resource(Resource):
         return pallet_tank
 
 class pallet_resource(Resource):
+    def get(self):
+        pallet_tank = pallet.get_pallet_tank()
+        return pallet_tank
+    
     def post(self):
         args = new_pallet_parser.parse_args()
         admin_validator(id=args['id']).admin_id_exists()
@@ -65,6 +69,7 @@ class pallet_resource(Resource):
         )
         new_pallet.save()
         return True, 200
+    
     def delete(self):
         args = del_pallet_parser.parse_args()
         admin_validator(id=args['id']).admin_id_exists()
