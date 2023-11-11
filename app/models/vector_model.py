@@ -53,6 +53,8 @@ class vector(Document):
     @classmethod
     def tank(cls):
         result = cls.objects.all()
+        if len(result) == 0:
+             return []
         result = [x.to_dict() for x in result]
         for item in result:
             item['create_date'] = str(JalaliDate.to_jalali(item['create_date'].year,item['create_date'].month,item['create_date'].day))
