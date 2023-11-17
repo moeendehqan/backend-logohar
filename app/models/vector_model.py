@@ -52,14 +52,15 @@ class vector(Document):
                  return False
     @classmethod
     def tank(cls):
-        result = cls.objects.all()
-        if len(result) == 0:
+        vector_all = cls.objects.all()
+        print(vector_all)
+        if len(vector_all) == 0:
              return []
-        result = [x.to_dict() for x in result]
-        for item in result:
+        vector_all = [x.to_dict() for x in vector_all]
+        for item in vector_all:
             item['create_date'] = str(JalaliDate.to_jalali(item['create_date'].year,item['create_date'].month,item['create_date'].day))
             item['file'] = item['file'].decode('utf-8')
-        return result
+        return vector_all
     @classmethod
     def delete_vector(cls, id_vector):
         vector_to_delete = cls.objects(_id=ObjectId(id_vector)).delete()
