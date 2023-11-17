@@ -6,7 +6,7 @@ from .pallet_resource import pallet_tank_resource, pallet_resource
 from .vector_resource import vector_resource,vector_tank_resource
 from .font_resource import font_resource , font_tank_resource
 from .validation_resource import BusinessName_resource, Keywords_resource
-
+from .creator_resource import creator_resource
 api = Api()
 api.add_resource(captcha_Resource, '/captcha')
 api.add_resource(admin_cookie_check_resource, '/admin/cookie_check')
@@ -23,4 +23,7 @@ api.add_resource(admin_class, '/admin/class')
 
 api.add_resource(BusinessName_resource, '/validtion/name')
 api.add_resource(Keywords_resource, '/validtion/keywords')
+
+api.add_resource(creator_resource, '/client/creator')
+
 

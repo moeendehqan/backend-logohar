@@ -11,13 +11,9 @@ from app.service.file_service import file_service
 vector_tank_parser = reqparse.RequestParser()
 vector_tank_parser.add_argument('id', type=str, help='کوکی ذخیر نشده، لطفا مجددا وارد شوید',required=True)
 
-
-
 del_vector_parser = reqparse.RequestParser()
 del_vector_parser.add_argument('id', type=str, help='کوکی ذخیر نشده، لطفا مجددا وارد شوید',required=True)
 del_vector_parser.add_argument('id_vector', type=str, help='پالتی برای حذف انتخاب نشده',required=True)
-
-
 
 class vector_resource(Resource):
     def post(self):

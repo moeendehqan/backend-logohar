@@ -21,13 +21,6 @@ class Keywords_resource(Resource):
         args = Keywords_parser.parse_args()
         objValidation =  validation_service()
         list_validation = [objValidation.contains_only_persian(i) for i in args['keywords']]
-        print(list_validation)
         if False in list_validation:
             return {'result':False,'message':'کلید واژه ها میبایست به فارسی باشد'},200
         return {'result':True,'message':''},200
-
-
-
-
-
-
